@@ -1,8 +1,8 @@
 # fixly
 
 ```
-AyudaKI [GITHUB]/
-├── back-end/               # Contém a simulação do sistema com back (o atual não é completo nesse nivel)
+fixly [GITHUB]/
+├── back-end/               # python
 │   ├── 
 │   ├── 
 │   ├── 
@@ -11,13 +11,14 @@ AyudaKI [GITHUB]/
 │   ├── css/                
 │   │   ├── cadastro.css
 │   │   ├── login.css
-│   │   ├── campanhas.css
 │   │   ├── contato.css
-│   │   ├── criar_campanha.css
-│   │   ├── dark-mode.css
-│   │   ├── login.css
 │   │   ├── perfil.css
-│   │   └── style.css
+│   │   ├── dark-mode.css
+│   │   ├── dashboard.css
+│   │   ├── area.css
+│   │   ├── equipamentos.css
+│   │   ├── manutencao.css
+│   │   └── style.css # aqui fica estilos que usam em todas as paginas, tipo a navbar
 │   ├── html/               # Todas as páginas HTML do sistema
 │   │   ├── cadastro.html
 │   │   ├── login.html
