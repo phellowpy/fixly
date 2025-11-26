@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Perfil</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/perfil.css">
+</head>
+<body id="perfil-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html" class="active">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-principal" style="text-align: center; margin-bottom: 40px;">
+            <h1>Meu Perfil 👤</h1>
+        </div>
+        
+        <div class="card" style="max-width: 600px; margin: auto;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="width: 100px; height: 100px; border-radius: 50%; background-color: #333; margin: auto; line-height: 100px; font-size: 2rem;">F</div>
+                <h2>Fulano de Tal</h2>
+                <p style="color: #bbb;">fulano@casa.com</p>
+            </div>
+            
+            <h3 style="margin-top: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Informações da Conta</h3>
+            
+            <div class="form-group" style="margin-top: 15px;">
+                <label>Nome:</label>
+                <input type="text" value="Fulano de Tal" disabled>
+            </div>
+
+            <div class="form-group">
+                <label>E-mail:</label>
+                <input type="email" value="fulano@casa.com" disabled>
+            </div>
+            
+            <div style="text-align: right; margin-top: 30px;">
+                <button class="btn-primary" style="background-color: #f39c12;">Editar Perfil</button>
+                <button class="btn-primary" style="background-color: var(--alert-color);">Sair da Conta</button>
+            </div>
+        </div>
+    </div>
+        <script src="../js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+    </body>
+</html>

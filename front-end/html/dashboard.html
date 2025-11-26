@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Dashboard de Manutenção</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Estilos básicos para o Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .equipamento-item h3 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        .equipamento-item p {
+            margin: 2px 0;
+            font-size: 0.9em;
+        }
+        .equipamento-item .tag {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+        .tag-area {
+            background-color: #e0f7fa;
+            color: #00838f;
+        }
+        .tag-periodicidade {
+            background-color: #fff3e0;
+            color: #ff6f00;
+        }
+        /* Estilo para diferenciar cards adicionados pelo JS */
+        .dynamic-item {
+            border: 1px solid var(--accent-color); 
+            box-shadow: 0 0 5px rgba(0, 179, 255, 0.5);
+        }
+    </style>
+</head>
+<body id="dashboard-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="area.html">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-principal">
+            <h1>Visão Geral dos Equipamentos 📊</h1>
+            <p>Status rápido de todos os ativos cadastrados e suas próximas manutenções.</p>
+        </div>
+        
+        <div id="equipamentos-dashboard-lista" class="dashboard-grid">
+            
+            <div class="card equipamento-item">
+                <h3>Máquina CNC P-2</h3>
+                <p><strong>Área:</strong> 
+                    <span class="tag tag-area">Produção A</span>
+                </p>
+                <p><strong>Descrição:</strong> CNC principal, setor 2</p>
+                <p><strong>Manutenção:</strong> 
+                    <span class="tag tag-periodicidade">90 dias</span>
+                </p>
+                <p><strong>Última Manutenção:</strong> 2025-10-01</p>
+                <a href="visualizar_equipamentos_a101.html" class="btn-secondary-small" style="margin-top: 10px;">Ver Detalhes</a>
+            </div>
+
+            <div class="card equipamento-item">
+                <h3>Bomba Hidráulica 1</h3>
+                <p><strong>Área:</strong> 
+                    <span class="tag tag-area">Produção A</span>
+                </p>
+                <p><strong>Descrição:</strong> Sistema de refrigeração</p>
+                <p><strong>Manutenção:</strong> 
+                    <span class="tag tag-periodicidade">30 dias</span>
+                </p>
+                <p><strong>Última Manutenção:</strong> 2025-11-01</p>
+                <a href="visualizar_equipamentos_a101.html" class="btn-secondary-small" style="margin-top: 10px;">Ver Detalhes</a>
+            </div>
+
+            <div class="card equipamento-item">
+                <h3>Ar Condicionado Central</h3>
+                <p><strong>Área:</strong> 
+                    <span class="tag tag-area">Administrativo</span>
+                </p>
+                <p><strong>Descrição:</strong> Unidade do 3º andar</p>
+                <p><strong>Manutenção:</strong> 
+                    <span class="tag tag-periodicidade">180 dias</span>
+                </p>
+                <p><strong>Última Manutenção:</strong> 2025-09-15</p>
+                <a href="visualizar_equipamentos_a102.html" class="btn-secondary-small" style="margin-top: 10px;">Ver Detalhes</a>
+            </div>
+
+            <div class="card equipamento-item">
+                <h3>Empilhadeira Elétrica #3</h3>
+                <p><strong>Área:</strong> 
+                    <span class="tag tag-area">Almoxarifado</span>
+                </p>
+                <p><strong>Descrição:</strong> Modelo 2023, bateria de íon</p>
+                <p><strong>Manutenção:</strong> 
+                    <span class="tag tag-periodicidade">60 dias</span>
+                </p>
+                <p><strong>Última Manutenção:</strong> 2025-10-15</p>
+                <a href="visualizar_equipamentos_a103.html" class="btn-secondary-small" style="margin-top: 10px;">Ver Detalhes</a>
+            </div>
+
+            </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+</body>
+</html>

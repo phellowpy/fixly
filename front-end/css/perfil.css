@@ -1,0 +1,44 @@
+/* fixly/front-end/css/perfil.css */
+
+/* Limita a largura do conteúdo do perfil */
+#perfil-page .container {
+    max-width: 600px;
+}
+
+/* Estilo do bloco de avatar/informação */
+.profile-header {
+    text-align: center; 
+    margin-bottom: 20px;
+}
+
+/* Simulação de Avatar */
+.avatar-placeholder {
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    background-color: #333; 
+    margin: 0 auto 15px; 
+    line-height: 100px; 
+    font-size: 2rem;
+    color: var(--text-light);
+}
+
+.card h2 {
+    margin: 5px 0;
+}
+
+/* Linha separadora para as seções */
+.card h3 {
+    margin-top: 30px; 
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 10px;
+    color: var(--primary-color);
+}
+
+/* Estilo para campos desabilitados */
+.form-group input:disabled {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px dashed var(--border-color);
+    color: #ccc;
+    cursor: not-allowed;
+}

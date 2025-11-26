@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Editar Equipamento</title>
+    <link rel="stylesheet" href="../css/style.css">
+    </head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html" class="active">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-principal">
+            <h1 style="color: var(--primary-color);">Editar Equipamento</h1>
+            <h2 id="equipamento-id-exibicao" style="color: var(--text-light); font-weight: 400; margin-top: 10px;">ID do Equipamento: Carregando...</h2>
+        </div>
+        
+        <div class="card">
+            <form id="form-edicao-equipamento">
+                <div class="form-group">
+                    <label for="nome-equipamento">Nome do Equipamento:</label>
+                    <input type="text" id="nome-equipamento" required placeholder="Ex: Máquina CNC P-2">
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao-equipamento">Descrição:</label>
+                    <input type="text" id="descricao-equipamento" placeholder="Ex: CNC principal, setor 2">
+                </div>
+
+                <div class="form-group">
+                    <label for="periodicidade-manutencao">Periodicidade de Manutenção (dias):</label>
+                    <input type="number" id="periodicidade-manutencao" required min="1" placeholder="Ex: 90">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ultima-manutencao">Última Manutenção Registrada:</label>
+                    <input type="date" id="ultima-manutencao" required>
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button type="submit" class="btn-primary" style="flex-grow: 1;">Salvar Alterações</button>
+                    <a href="javascript:history.back()" class="btn-primary" 
+                       style="background-color: #555; text-align: center; flex-grow: 1;">Cancelar e Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const equipamentoId = params.get('id');
+            const idExibicao = document.getElementById('equipamento-id-exibicao');
+            const form = document.getElementById('form-edicao-equipamento');
+
+            if (equipamentoId) {
+                idExibicao.textContent = `ID do Equipamento: ${equipamentoId}`;
+                
+                // ⚠️ AQUI ENTRA A LÓGICA DO FIREBASE para carregar os dados atuais
+                // Exemplo: fetchEquipmentData(equipamentoId).then(data => preencherCampos(data));
+                
+                // Para demonstração, preenche com dados mock
+                document.getElementById('nome-equipamento').value = 'Máquina CNC P-2 (Carregada)';
+                document.getElementById('periodicidade-manutencao').value = 90;
+                // ... outros campos
+                
+            } else {
+                idExibicao.textContent = 'Erro: Nenhum equipamento especificado.';
+                form.style.display = 'none'; // Esconde o formulário se não tiver ID
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const nome = document.getElementById('nome-equipamento').value;
+                const periodicidade = document.getElementById('periodicidade-manutencao').value;
+                // ... outros dados
+                
+                // ⚠️ AQUI ENTRA A LÓGICA DO FIREBASE para atualizar os dados
+                console.log('Dados do Equipamento a serem atualizados:', {
+                    equipamentoId,
+                    nome,
+                    periodicidade
+                });
+
+                // Exemplo de sucesso (substitua pela lógica real do Firebase):
+                alert(`Equipamento "${nome}" (ID: ${equipamentoId}) atualizado com sucesso (Mock)!`);
+                window.location.href = 'area.html'; // Redireciona de volta para a lista
+            });
+        });
+    </script>
+</body>
+</html>

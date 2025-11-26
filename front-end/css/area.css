@@ -1,0 +1,264 @@
+/* fixly/front-end/css/area.css */
+
+/* ---------------------------------------------------------------------- */
+/* --- Estilos para o Card de Áreas na página area.html (Tema Escuro) --- */
+/* ---------------------------------------------------------------------- */
+
+.area-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.area-card {
+    text-decoration: none;
+    /* Certifique-se que o card use a cor de fundo do tema escuro, se aplicável */
+    background-color: var(--card-background, #2c2c2c); 
+    color: var(--text-color, #f0f0f0);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block; 
+}
+
+.area-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Sombra mais forte no tema escuro */
+}
+
+.area-icon {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.area-card h3 {
+    margin: 0 0 5px 0;
+    color: var(--primary-color);
+}
+
+.area-card p {
+    color: var(--text-color-secondary, #b0b0b0); /* Uma cor secundária mais clara */
+    font-size: 0.9em;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- Estilos para o formulário de CRIAÇÃO DE ÁREA (criar_area.html) --- */
+/* ---------------------------------------------------------------------- */
+
+.form-container {
+    max-width: 500px; 
+    margin: 40px auto; 
+    padding: 30px;
+    /* Fundo do card/painel no tema escuro */
+    background-color: var(--card-background, #2c2c2c); 
+    border-radius: 12px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); 
+    border-top: 5px solid var(--primary-color); 
+}
+
+.form-container h1 {
+    font-size: 1.8em;
+    /* Cor do texto principal */
+    color: var(--text-color, #f0f0f0); 
+    margin-bottom: 25px;
+    text-align: center;
+    /* Linha de separação discreta */
+    border-bottom: 2px solid #555; 
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block; 
+    margin-bottom: 8px;
+    font-weight: 600; 
+    /* Cor do texto principal */
+    color: var(--text-color, #f0f0f0); 
+    font-size: 1em;
+}
+
+/* Estilizando o campo de input */
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    /* Fundo do input mais escuro que o fundo da página, mas claro o suficiente */
+    background-color: #444; 
+    /* Borda neutra */
+    border: 1px solid #777; 
+    border-radius: 8px; 
+    font-size: 1em;
+    /* Texto digitado claro */
+    color: var(--text-color, #f0f0f0); 
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+}
+
+/* Efeito ao focar no campo */
+.form-group input[type="text"]:focus {
+    border-color: var(--primary-color); 
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.4); 
+    outline: none; 
+}
+
+/* Estilo do botão (btn-primary) - Usa var(--primary-color) e texto branco, ideal para o tema escuro */
+.btn-primary {
+    width: 100%; 
+    padding: 12px;
+    background-color: var(--primary-color); 
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    text-align: center;
+    text-decoration: none; 
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; 
+}
+
+.btn-primary:active {
+    transform: translateY(1px); 
+}
+
+/* --- Estilos para os Ícones de Ação --- */
+
+.equipamento-card {
+    position: relative; /* Mantém a referência para os ícones */
+}
+
+/* NOVO: Contêiner para agrupar e posicionar os dois ícones */
+.actions-icons-container {
+    position: absolute;
+    top: 10px; /* Posição do topo */
+    right: 10px; /* Posição da direita */
+    display: flex;
+    flex-direction: column; /* Coloca os ícones um embaixo do outro */
+    gap: 8px; /* Espaço entre o lápis e o calendário */
+}
+
+.edit-icon-container,
+.maintenance-icon-container {
+    font-size: 1.5em; 
+    cursor: pointer;
+    color: var(--primary-color); /* Cor principal */
+    transition: color 0.2s, transform 0.2s;
+    line-height: 1; 
+    padding: 5px; /* Área clicável maior */
+    border-radius: 4px;
+}
+
+.edit-icon-container:hover {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.maintenance-icon-container {
+    color: #4CAF50; /* Verde para o calendário de manutenção */
+}
+
+.maintenance-icon-container:hover {
+    color: #81C784;
+    transform: scale(1.1);
+}
+
+/* ------------------------------------------- */
+/* --- ESTILOS PARA OS CARDS DE EQUIPAMENTO --- */
+/* ------------------------------------------- */
+
+/* Adicionado: Permite posicionar os ícones dentro do card */
+.equipamento-item {
+    position: relative;
+    padding: 20px; /* Ajuste o padding se necessário */
+}
+
+/* Contêiner para agrupar e posicionar os dois ícones */
+.actions-icons-container {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    display: flex;
+    flex-direction: column; /* Coloca os ícones um embaixo do outro */
+    gap: 8px; /* Espaço entre o lápis e o calendário */
+}
+
+.edit-icon-container,
+.maintenance-icon-container {
+    font-size: 1.5em; 
+    cursor: pointer;
+    color: var(--primary-color); 
+    transition: color 0.2s, transform 0.2s;
+    line-height: 1; 
+    padding: 5px; 
+    border-radius: 50%; /* Faz o toque ser mais amigável */
+}
+
+.edit-icon-container:hover {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.maintenance-icon-container {
+    color: #4CAF50; /* Verde para o calendário */
+}
+
+.maintenance-icon-container:hover {
+    color: #81C784;
+    transform: scale(1.1);
+}
+
+/* Estilo para a tag de Status (mantido/ajustado se necessário) */
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.status-ok {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+}
+
+.status-alerta {
+    background-color: #FFC107; /* Amarelo */
+    color: #333;
+}
+
+.status-vencida {
+    background-color: #F44336; /* Vermelho */
+    color: white;
+}
+
+/* ------------------------------------------- */
+/* --- ESTILOS PARA O MODAL DE MANUTENÇÃO --- */
+/* ------------------------------------------- */
+
+#maintenance-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none; /* Começa oculto */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#maintenance-form-content {
+    background-color: var(--card-background, #2c2c2c);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 450px;
+}

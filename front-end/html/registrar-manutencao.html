@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Registrar Manutenção</title>
+    <link rel="stylesheet" href="../css/style.css">
+    </head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html" class="active">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-principal">
+            <h1 style="color: var(--primary-color);">Registrar Nova Manutenção</h1>
+            <h2 id="equipamento-nome" style="color: var(--text-light); font-weight: 400; margin-top: 10px;"></h2>
+        </div>
+        
+        <div class="card">
+            <form id="form-registro-manutencao">
+                <input type="hidden" id="manutencao-equipamento-id">
+
+                <div class="form-group">
+                    <label for="data-manutencao-concluida">Data da Manutenção Concluída:</label>
+                    <input type="date" id="data-manutencao-concluida" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipo-manutencao">Tipo de Manutenção:</label>
+                    <select id="tipo-manutencao" required>
+                        <option value="">Selecione o tipo</option>
+                        <option value="Preventiva">Preventiva</option>
+                        <option value="Corretiva">Corretiva</option>
+                        <option value="Preditiva">Preditiva</option>
+                        <option value="Lubrificação">Lubrificação</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="responsavel">Responsável pela Manutenção:</label>
+                    <input type="text" id="responsavel" required placeholder="Nome do Técnico ou Equipe">
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes-manutencao">Observações e Ações Realizadas:</label>
+                    <textarea id="observacoes-manutencao" rows="6" placeholder="Descreva o detalhe da intervenção, peças trocadas, etc."></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button type="submit" class="btn-primary" style="flex-grow: 1;">Salvar Registro</button>
+                    <a href="javascript:history.back()" class="btn-primary" 
+                       style="background-color: #555; text-align: center; flex-grow: 1;">Cancelar e Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const equipamentoId = params.get('id');
+            const equipamentoName = params.get('name');
+            
+            const nomeElement = document.getElementById('equipamento-nome');
+            const idInput = document.getElementById('manutencao-equipamento-id');
+            const form = document.getElementById('form-registro-manutencao');
+
+            if (equipamentoId && equipamentoName) {
+                nomeElement.textContent = `Equipamento: ${decodeURIComponent(equipamentoName)}`;
+                idInput.value = equipamentoId;
+            } else {
+                nomeElement.textContent = 'Erro: Equipamento não especificado.';
+                form.style.display = 'none'; // Esconde o formulário se não tiver ID
+            }
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const dataConcluida = document.getElementById('data-manutencao-concluida').value;
+                const tipo = document.getElementById('tipo-manutencao').value;
+                const responsavel = document.getElementById('responsavel').value;
+                const observacoes = document.getElementById('observacoes-manutencao').value;
+                
+                // ⚠️ AQUI ENTRA A LÓGICA DO FIREBASE para salvar o registro
+                console.log('Dados da Manutenção a serem salvos:', {
+                    equipamentoId,
+                    dataConcluida,
+                    tipo,
+                    responsavel,
+                    observacoes
+                });
+
+                // Exemplo de sucesso (substitua pela lógica real do Firebase):
+                alert(`Manutenção de "${equipamentoName}" registrada com sucesso (Mock)!`);
+                window.location.href = 'area.html'; // Redireciona para a página de áreas ou equipamentos
+            });
+        });
+    </script>
+</body>
+</html>

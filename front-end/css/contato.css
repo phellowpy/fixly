@@ -1,0 +1,11 @@
+/* fixly/front-end/css/contato.css */
+
+/* Limita a largura do formulário de contato */
+#contato-page .container {
+    max-width: 600px;
+}
+
+/* Garante que a área de texto seja maior */
+.form-group textarea {
+    min-height: 120px;
+}

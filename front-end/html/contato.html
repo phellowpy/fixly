@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Contato</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/contato.css">
+</head>
+<body id="contato-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html" class="active">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-principal" style="text-align: center; margin-bottom: 40px;">
+            <h1>Fale Conosco 💬</h1>
+            <p>Envie suas dúvidas, sugestões ou relatórios de bugs.</p>
+        </div>
+        
+        <div class="card" style="max-width: 600px; margin: auto;">
+            <form id="form-contato">
+                
+                <div class="form-group">
+                    <label for="nome">Seu Nome:</label>
+                    <input type="text" id="nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Seu E-mail:</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="assunto">Assunto:</label>
+                    <select id="assunto" required>
+                        <option value="">-- Selecione um Assunto --</option>
+                        <option value="duvida">Dúvida Geral</option>
+                        <option value="sugestao">Sugestão</option>
+                        <option value="bug">Reportar Bug</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-primary" style="width: 100%;">Enviar Mensagem</button>
+            </form>
+        </div>
+    </div>
+        <script src="../js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+    </body>
+</html>

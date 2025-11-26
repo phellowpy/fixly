@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Equipamentos de Almoxarifado</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/area.css"> 
+    <style>
+        .actions-icons-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px; 
+        }
+        .edit-icon-container, .maintenance-icon-container, .delete-icon-container {
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        .card.equipamento-item { position: relative; } 
+        .edit-icon-container:hover { background-color: rgba(0, 123, 255, 0.1); }
+        .maintenance-icon-container:hover { background-color: rgba(255, 193, 7, 0.1); }
+        .delete-icon-container:hover { background-color: rgba(255, 0, 0, 0.1); } 
+        .status-badge {
+            padding: 5px 10px; 
+            border-radius: 5px; 
+            font-weight: 600;
+            background-color: var(--ok-color, #4CAF50);
+            color: var(--bg-dark, #0f1225);
+        }
+    </style>
+</head>
+<body id="visualizar-equipamentos-a101-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html" class="active">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="header-principal">
+            
+            <h1>Equipamentos em: Almoxarifado</h1>
+            
+            <a href="equipamentos.html?areaId=a103&areaName=Almoxarifado" class="btn-primary" style="margin-top: 20px;">+ Novo Equipamento</a>
+        </div>
+        
+        <div id="equipamento-lista" class="equipamento-lista">
+            
+            <div class="card equipamento-item" data-equipamento-id="mock_empilhadeira_3">
+                <div class="actions-icons-container">
+                    <div class="edit-icon-container" 
+                        onclick="goToEditPage('mock_empilhadeira_3')" title="Editar propriedades">
+                        ✏️
+                    </div>
+                    <div class="maintenance-icon-container" 
+                        onclick="goToMaintenancePage('mock_empilhadeira_3', 'Empilhadeira Elétrica #3')" title="Registrar manutenção">
+                        📅
+                    </div>
+                    <div class="delete-icon-container" 
+                        onclick="removeEquipment('mock_empilhadeira_3', 'Empilhadeira Elétrica #3')" title="Remover equipamento">
+                        🗑️
+                    </div>
+                </div>
+
+                <div class="equipamento-info">
+                    <h3>Empilhadeira Elétrica #3</h3>
+                    <p>Descrição: <strong>Modelo 2023, bateria de íon</strong></p>
+                    <p>Periodicidade: 60 dias</p>
+                    <p>Última Manutenção: 2025-10-15</p>
+                    <span class="status-badge status-ok">OK</span>
+                </div>
+            </div>
+
+            <div class="card equipamento-item" data-equipamento-id="mock_alarme_almox">
+                <div class="actions-icons-container">
+                    <div class="edit-icon-container" 
+                        onclick="goToEditPage('mock_alarme_almox')" title="Editar propriedades">
+                        ✏️
+                    </div>
+                    <div class="maintenance-icon-container" 
+                        onclick="goToMaintenancePage('mock_alarme_almox', 'Sistema de Alarme Principal')" title="Registrar manutenção">
+                        📅
+                    </div>
+                    <div class="delete-icon-container" 
+                        onclick="removeEquipment('mock_alarme_almox', 'Sistema de Alarme Principal')" title="Remover equipamento">
+                        🗑️
+                    </div>
+                </div>
+                <div class="equipamento-info">
+                    <h3>Sistema de Alarme Principal</h3>
+                    <p>Descrição: <strong>Monitoramento de segurança perimetral</strong></p>
+                    <p>Periodicidade: 30 dias</p>
+                    <p>Última Manutenção: 2025-11-20</p>
+                    <span class="status-badge status-ok">OK</span>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+    
+    <script>
+        // Funções de AÇÃO (navegação e remoção)
+        function goToEditPage(equipamentoId) {
+            window.location.href = `editar-equipamento.html?id=${equipamentoId}`;
+        }
+        function goToMaintenancePage(equipamentoId, equipamentoName) {
+            const encodedName = encodeURIComponent(equipamentoName);
+            window.location.href = `registrar-manutencao.html?id=${equipamentoId}&name=${encodedName}`;
+        }
+        function removeEquipment(equipamentoId, equipamentoName) {
+            const confirmed = confirm(`Tem certeza que deseja remover o equipamento "${equipamentoName}" (ID: ${equipamentoId})? Esta ação é irreversível.`);
+            if (confirmed) {
+                console.log(`Iniciando remoção do equipamento com ID: ${equipamentoId}`);
+                const itemToRemove = document.querySelector(`.equipamento-item[data-equipamento-id="${equipamentoId}"]`);
+                if (itemToRemove) {
+                    itemToRemove.remove();
+                    alert(`Equipamento "${equipamentoName}" foi removido com sucesso (Ação Simulada).`);
+                } 
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Cadastrar Equipamento</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/equipamentos.css"> 
+</head>
+<body id="equipamento-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html" class="active">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="form-container">
+            <h1>Cadastrar Novo Equipamento 🛠️</h1>
+            
+            <p id="area-info" style="color: var(--accent-color); text-align: center; font-weight: bold;"></p>
+
+            <form id="form-equipamento">
+                
+                <div class="form-group">
+                    <label for="nome">Nome do Equipamento:</label>
+                    <input type="text" id="nome" required placeholder="Ex: Motor Principal M-5">
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição:</label>
+                    <input type="text" id="descricao" required placeholder="Ex: Motor DC, 200cv, usado na linha de corte.">
+                </div>
+
+                <div class="form-group">
+                    <label for="periodicidade_dias">Periodicidade de Manutenção (dias):</label>
+                    <input type="number" id="periodicidade_dias" required min="1" placeholder="Ex: 90">
+                </div>
+
+                <div class="form-group">
+                    <label for="data_ultima_manutencao">Data da Última Manutenção:</label>
+                    <input type="date" id="data_ultima_manutencao" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Salvar Equipamento</button>
+            </form>
+        </div>
+        
+    </div>
+    <script src="../js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+</body>
+</html>

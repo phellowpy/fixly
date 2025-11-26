@@ -1,0 +1,413 @@
+/* fixly/front-end/js/app.js - Lógica Principal da Aplicação Fixly (Local Storage) */
+
+// --- FUNÇÕES DE UTILIDADE GERAL ---
+
+function getTodayDateString() {
+    return new Date().toISOString().split('T')[0];
+}
+
+function dateDiffInDays(date1, date2) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
+// --- FUNÇÕES DE GESTÃO DE DADOS (LOCAL STORAGE) ---
+
+// Define os equipamentos estáticos (MOCKADOS) para as páginas A101, A102, A103
+const MOCKED_EQUIPMENTS = [
+    { id: 'mock_cnc_p2', area_id: 'area_a101', nome: 'Máquina CNC P-2', descricao: 'CNC principal, setor 2', periodicidade_dias: '90', data_ultima_manutencao: '2025-10-01', proxima_manutencao: '2025-12-30' },
+    { id: 'mock_bomba_1', area_id: 'area_a101', nome: 'Bomba Hidráulica 1', descricao: 'Sistema de refrigeração', periodicidade_dias: '30', data_ultima_manutencao: '2025-11-01', proxima_manutencao: '2025-12-01' },
+    
+    { id: 'mock_prensa_x3', area_id: 'area_a102', nome: 'Prensa Hidráulica X3', descricao: 'Linha de montagem 3', periodicidade_dias: '180', data_ultima_manutencao: '2025-08-15', proxima_manutencao: '2026-02-11' },
+    { id: 'mock_injetora_m10', area_id: 'area_a102', nome: 'Injetora M-10', descricao: 'Máquina principal de plástico', periodicidade_dias: '60', data_ultima_manutencao: '2025-10-25', proxima_manutencao: '2025-12-24' },
+    
+    { id: 'mock_empilhadeira_e5', area_id: 'area_a103', nome: 'Empilhadeira E-5', descricao: 'Empilhadeira elétrica principal', periodicidade_dias: '60', data_ultima_manutencao: '2025-09-01', proxima_manutencao: '2025-10-31' },
+    { id: 'mock_paleteira_p1', area_id: 'area_a103', nome: 'Paleteira Manual P-1', descricao: 'Para cargas leves', periodicidade_dias: '365', data_ultima_manutencao: '2025-01-01', proxima_manutencao: '2026-01-01' },
+];
+
+function loadAreas() {
+    return JSON.parse(localStorage.getItem('areas')) || [];
+}
+
+function saveAreas(areas) {
+    localStorage.setItem('areas', JSON.stringify(areas));
+}
+
+function loadEquipamentosData() {
+    // Carrega equipamentos do Local Storage e combina com os mockados (se não existirem)
+    let dynamicEquipamentos = JSON.parse(localStorage.getItem('equipamentos')) || [];
+    
+    // Adiciona os mockados, garantindo que não sejam duplicados se já foram salvos
+    let allEquipamentos = [...dynamicEquipamentos];
+    
+    MOCKED_EQUIPMENTS.forEach(mockEquip => {
+        if (!allEquipamentos.find(e => e.id === mockEquip.id)) {
+            allEquipamentos.push(mockEquip);
+        }
+    });
+
+    return allEquipamentos;
+}
+
+function saveEquipamentosData(equipamentos) {
+    // Salva apenas os equipamentos que NÃO são mockados ou salva a lista completa
+    // Por simplicidade, vamos salvar tudo. O MOCKED_EQUIPMENTS é apenas a fonte original.
+    localStorage.setItem('equipamentos', JSON.stringify(equipamentos));
+}
+
+// --- HANDLERS DE FORMULÁRIO (CRIAÇÃO) ---
+// (Funções handleAreaSubmit e handleEquipamentoSubmit permanecem as mesmas)
+
+// ... [Código das funções handleAreaSubmit e handleEquipamentoSubmit da resposta anterior] ...
+
+function handleAreaSubmit(event) {
+    event.preventDefault();
+
+    const nome = document.getElementById('nome').value;
+    const descricao = document.getElementById('descricao').value;
+
+    const newArea = {
+        id: 'area_' + Date.now(),
+        nome: nome,
+        descricao: descricao,
+        dataCriacao: getTodayDateString()
+    };
+
+    const areas = loadAreas();
+    areas.push(newArea);
+    saveAreas(areas);
+
+    alert(`Área "${nome}" cadastrada com sucesso!`);
+    window.location.href = 'area.html';
+}
+
+function handleEquipamentoSubmit(event) {
+    event.preventDefault();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const areaId = urlParams.get('area_id');
+
+    if (!areaId) {
+        alert('Erro: ID da área não encontrado.');
+        return;
+    }
+
+    const nome = document.getElementById('nome').value;
+    const descricao = document.getElementById('descricao').value;
+    const periodicidadeDias = document.getElementById('periodicidade_dias').value;
+    const dataUltimaManutencao = document.getElementById('data_ultima_manutencao').value;
+    
+    const dataUltima = new Date(dataUltimaManutencao);
+    dataUltima.setDate(dataUltima.getDate() + parseInt(periodicidadeDias));
+    const proximaManutencao = dataUltima.toISOString().split('T')[0];
+
+    const newEquipamento = {
+        id: 'equip_' + Date.now(),
+        area_id: areaId,
+        nome: nome,
+        descricao: descricao,
+        periodicidade_dias: periodicidadeDias,
+        data_ultima_manutencao: dataUltimaManutencao,
+        proxima_manutencao: proximaManutencao
+    };
+
+    const equipamentos = loadEquipamentosData();
+    equipamentos.push(newEquipamento);
+    saveEquipamentosData(equipamentos);
+
+    alert(`Equipamento "${nome}" cadastrado com sucesso! Próxima manutenção: ${proximaManutencao}`);
+    
+    // Tenta redirecionar para a página da área, seja dinâmica ou estática
+    if (areaId.startsWith('area_a')) {
+        window.location.href = `visualizar_equipamentos_${areaId.split('_')[1]}.html`; // Ex: visualiza_equipamentos_a101.html
+    } else {
+        window.location.href = `visualizar_equipamentos.html?area_id=${areaId}`;
+    }
+}
+
+
+// --- FUNÇÕES DE EDIÇÃO E MANUTENÇÃO ---
+
+/**
+ * Abre o modal de registro de manutenção (ÍCONE CALENDÁRIO).
+ */
+window.openMaintenanceForm = function(equipamentoId, equipamentoNome) {
+    document.getElementById('manutencao-equipamento-id').value = equipamentoId;
+    document.getElementById('equipamento-manutencao-nome').textContent = 'Equipamento: ' + equipamentoNome;
+    
+    const today = getTodayDateString();
+    document.getElementById('data-manutencao-concluida').value = today;
+
+    document.getElementById('maintenance-modal').style.display = 'flex';
+};
+
+/**
+ * Navega para a página de edição (ÍCONE LÁPIS).
+ */
+window.goToEditPage = function(equipamentoId) {
+    window.location.href = `editar_equipamento.html?equipamento_id=${equipamentoId}`;
+};
+
+/**
+ * Manipula o registro de manutenção concluída.
+ */
+function handleMaintenanceSubmit(event) {
+    event.preventDefault();
+    
+    const equipamentoId = document.getElementById('manutencao-equipamento-id').value;
+    const dataConcluida = document.getElementById('data-manutencao-concluida').value;
+    const tipoManutencao = document.getElementById('tipo-manutencao').value;
+    const observacoes = document.getElementById('observacoes-manutencao').value;
+
+    const equipamentos = loadEquipamentosData();
+    const historico = JSON.parse(localStorage.getItem('historico_manutencao')) || [];
+    
+    const equipamentoIndex = equipamentos.findIndex(e => e.id === equipamentoId);
+    let equipamentoNome = 'desconhecido';
+    let areaId;
+
+    if (equipamentoIndex > -1) {
+        const equipamento = equipamentos[equipamentoIndex];
+        equipamentoNome = equipamento.nome;
+        areaId = equipamento.area_id;
+
+        const periodicidade = parseInt(equipamento.periodicidade_dias);
+        const novaData = new Date(dataConcluida);
+        novaData.setDate(novaData.getDate() + periodicidade);
+        
+        equipamento.data_ultima_manutencao = dataConcluida;
+        equipamento.proxima_manutencao = novaData.toISOString().split('T')[0];
+        
+        saveEquipamentosData(equipamentos); 
+
+        const novoRegistro = {
+            id: Date.now().toString(),
+            equipamentoId: equipamentoId,
+            data: dataConcluida,
+            tipo: tipoManutencao,
+            observacoes: observacoes,
+            tecnico: 'Usuário Logado' 
+        };
+
+        historico.push(novoRegistro);
+        localStorage.setItem('historico_manutencao', JSON.stringify(historico));
+
+        alert(`Manutenção de "${equipamentoNome}" registrada! Próxima data atualizada para ${equipamento.proxima_manutencao}.`);
+    } else {
+         alert('Erro: Equipamento não encontrado para registro.');
+    }
+    
+    document.getElementById('maintenance-modal').style.display = 'none';
+    
+    // Atualiza a página estática sem perder o estado dos cards
+    window.location.reload(); 
+}
+
+/**
+ * Carrega os dados na página 'editar_equipamento.html'.
+ */
+function loadEditEquipamentoPage() {
+    const titleElement = document.getElementById('equipamento-sendo-editado');
+    const form = document.getElementById('form-editar-equipamento');
+    if (!titleElement || !form) return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const equipamentoId = urlParams.get('equipamento_id');
+
+    if (!equipamentoId) {
+        titleElement.textContent = 'Erro: ID do equipamento não fornecido.';
+        return;
+    }
+
+    const equipamentos = loadEquipamentosData();
+    const equipamento = equipamentos.find(e => e.id === equipamentoId);
+
+    if (equipamento) {
+        titleElement.textContent = `Editando: ${equipamento.nome}`;
+        
+        document.getElementById('edit-equipamento-id').value = equipamento.id;
+        document.getElementById('edit-nome').value = equipamento.nome;
+        document.getElementById('edit-descricao').value = equipamento.descricao;
+        document.getElementById('edit-periodicidade_dias').value = equipamento.periodicidade_dias;
+        document.getElementById('edit-data-ultima').value = equipamento.data_ultima_manutencao;
+    } else {
+        titleElement.textContent = 'Equipamento não encontrado.';
+    }
+}
+
+/**
+ * Manipula a submissão do formulário de edição de equipamento.
+ */
+function handleEditEquipamentoSubmit(event) {
+    event.preventDefault();
+
+    const id = document.getElementById('edit-equipamento-id').value;
+    const nome = document.getElementById('edit-nome').value;
+    const descricao = document.getElementById('edit-descricao').value;
+    const periodicidadeDias = document.getElementById('edit-periodicidade_dias').value;
+
+    const equipamentos = loadEquipamentosData();
+    const equipamentoIndex = equipamentos.findIndex(e => e.id === id);
+
+    if (equipamentoIndex > -1) {
+        let equipamento = equipamentos[equipamentoIndex];
+        
+        const oldPeriodicidade = parseInt(equipamento.periodicidade_dias);
+        const newPeriodicidade = parseInt(periodicidadeDias);
+        
+        // Recalcula a próxima manutenção se a periodicidade mudar
+        if (oldPeriodicidade !== newPeriodicidade) {
+            const dataUltima = new Date(equipamento.data_ultima_manutencao);
+            dataUltima.setDate(dataUltima.getDate() + newPeriodicidade);
+            equipamento.proxima_manutencao = dataUltima.toISOString().split('T')[0];
+        }
+
+        // Atualiza as propriedades editáveis
+        equipamento.nome = nome;
+        equipamento.descricao = descricao;
+        equipamento.periodicidade_dias = periodicidadeDias;
+
+        equipamentos[equipamentoIndex] = equipamento;
+        saveEquipamentosData(equipamentos);
+
+        alert(`Equipamento "${nome}" atualizado com sucesso!`);
+        
+        // Redirecionamento correto para páginas estáticas ou dinâmicas
+        const areaId = equipamento.area_id; 
+        if (areaId.startsWith('area_a')) {
+             window.location.href = `visualizar_equipamentos_${areaId.split('_')[1]}.html`;
+        } else {
+            window.location.href = `visualizar_equipamentos.html?area_id=${areaId}`;
+        }
+
+    } else {
+        alert('Erro: Equipamento não encontrado para edição.');
+    }
+}
+
+
+// --- FUNÇÕES DE CARREGAMENTO DE PÁGINAS ---
+
+function loadAreaPage() {
+    const container = document.getElementById('area-grid');
+    if (!container) return;
+    
+    const areas = loadAreas();
+    let html = '';
+
+    if (areas.length === 0) {
+        html = '<p style="color: var(--text-color-secondary);">Nenhuma área cadastrada. Clique em "Cadastrar Nova Área" para começar.</p>';
+    } else {
+        areas.forEach(area => {
+            const numEquipamentos = loadEquipamentosData().filter(e => e.area_id === area.id).length;
+            
+            html += `
+                <a href="visualizar_equipamentos.html?area_id=${area.id}" class="area-card">
+                    <span class="area-icon">🏭</span>
+                    <h3>${area.nome}</h3>
+                    <p>${area.descricao}</p>
+                    <p>Equipamentos: ${numEquipamentos}</p>
+                </a>
+            `;
+        });
+    }
+
+    container.innerHTML = html;
+}
+
+
+/**
+ * Atualiza o status de cada card estático na página (A101, A102, A103).
+ */
+function updateStaticEquipmentsStatus(areaId) {
+    const equipamentosContainer = document.getElementById('equipamento-lista');
+    if (!equipamentosContainer) return;
+
+    const todosEquipamentos = loadEquipamentosData();
+    const equipamentosDaArea = todosEquipamentos.filter(e => e.area_id === areaId);
+    const hoje = new Date();
+
+    equipamentosDaArea.forEach(equipamento => {
+        const cardElement = equipamentosContainer.querySelector(`.card[data-equipamento-id="${equipamento.id}"]`);
+        if (!cardElement) return;
+
+        const dataProx = new Date(equipamento.proxima_manutencao);
+        const diff = dateDiffInDays(hoje, dataProx);
+        let statusClass = 'status-ok';
+        let statusText = 'OK';
+
+        if (diff <= 0) {
+            statusClass = 'status-vencida';
+            statusText = 'VENCIDA';
+        } else if (diff <= 7) {
+            statusClass = 'status-alerta';
+            statusText = 'ALERTA';
+        }
+
+        // Atualiza o texto da Última Manutenção
+        let ultManutElement = cardElement.querySelector('p:nth-child(4)'); // Pega a 4a tag <p>
+        if (ultManutElement) {
+             ultManutElement.innerHTML = `Última Manutenção: <strong>${new Date(equipamento.data_ultima_manutencao).toLocaleDateString()}</strong>`;
+        }
+        
+        // Atualiza a span de status
+        let statusBadge = cardElement.querySelector('.status-badge');
+        if (!statusBadge) {
+            // Se o status não existir, cria e anexa (necessário para as páginas originais)
+            statusBadge = document.createElement('span');
+            statusBadge.className = 'status-badge';
+            cardElement.querySelector('.equipamento-info').appendChild(statusBadge);
+        }
+        
+        statusBadge.className = `status-badge ${statusClass}`;
+        statusBadge.textContent = statusText;
+    });
+}
+
+
+// --- INICIALIZAÇÃO E ROTAS ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Escutas de formulário
+    const formArea = document.getElementById('form-area');
+    const formEquipamento = document.getElementById('form-equipamento');
+    const formManutencao = document.getElementById('form-manutencao'); 
+    const formEditEquipamento = document.getElementById('form-editar-equipamento'); 
+
+    if (formArea) {
+        formArea.addEventListener('submit', handleAreaSubmit);
+    }
+    if (formEquipamento) {
+        formEquipamento.addEventListener('submit', handleEquipamentoSubmit);
+        // Não é necessário 'populateEquipamentoFormArea' aqui se ela só existe em equipamentos.html
+    }
+    if (formManutencao) {
+        formManutencao.addEventListener('submit', handleMaintenanceSubmit);
+    }
+    if (formEditEquipamento) {
+        formEditEquipamento.addEventListener('submit', handleEditEquipamentoSubmit);
+    }
+
+    // 2. Carregamento de dados por página (Simulação de Rotas)
+    const pageId = document.body.id;
+
+    if (pageId === 'area-page') {
+        loadAreaPage();
+    } else if (pageId === 'editar-equipamento-page') {
+        loadEditEquipamentoPage();
+    }
+    // 3. Lógica para páginas estáticas A101, A102, A103
+    else if (pageId.startsWith('visualizar-equipamentos-a')) {
+        let areaId;
+        if (pageId.includes('a101')) areaId = 'area_a101';
+        else if (pageId.includes('a102')) areaId = 'area_a102';
+        else if (pageId.includes('a103')) areaId = 'area_a103';
+        
+        if (areaId) {
+            // Esta função atualiza o status de vencimento e a data da última manutenção nos cards mockados
+            updateStaticEquipmentsStatus(areaId); 
+        }
+    }
+});

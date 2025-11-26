@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Áreas e Setores</title>
+    <link rel="stylesheet" href="../css/style.css"> 
+    <link rel="stylesheet" href="../css/area.css">
+</head>
+<body id="area-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html" class="active">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-principal">
+            
+ 
+            
+            <h1>Setores e Locais 🏢</h1>
+            <p>Selecione um setor para gerenciar seus equipamentos ou crie um novo.</p>
+            <br>
+                    <a href="criar_area.html" class="btn-primary" style="margin-bottom: 20px;">+ Nova Área</a>
+        </div>
+        
+<div id="area-grid" class="area-grid">
+            
+    <a href="visualizar_equipamentos_a101.html" class="card area-card">
+        <div class="area-icon">🏢</div><h3>Produção A</h3><p>Adicionar/Ver Equipamentos</p>
+    </a>
+    
+    <a href="visualizar_equipamentos_a102.html" class="card area-card">
+        <div class="area-icon">🏢</div><h3>Administrativo</h3><p>Adicionar/Ver Equipamentos</p>
+    </a>
+    
+    <a href="visualizar_equipamentos_a103.html" class="card area-card">
+        <div class="area-icon">🏢</div><h3>Almoxarifado</h3><p>Adicionar/Ver Equipamentos</p>
+    </a>
+
+    </div>
+
+    </div>
+    <script src="../js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+</body>
+</html>

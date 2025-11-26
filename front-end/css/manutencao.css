@@ -1,0 +1,17 @@
+/* fixly/front-end/css/manutencao.css */
+
+.historico-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.historico-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.historico-item p {
+    font-size: 0.9rem;
+    color: #bbb;
+}

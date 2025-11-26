@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Equipamentos de Produção A</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/area.css"> 
+    <style>
+        .actions-icons-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px; 
+        }
+        .edit-icon-container,
+        .maintenance-icon-container,
+        .delete-icon-container {
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        .edit-icon-container:hover {
+            background-color: rgba(0, 123, 255, 0.1); 
+        }
+        .maintenance-icon-container:hover {
+            background-color: rgba(255, 193, 7, 0.1);
+        }
+        .delete-icon-container:hover {
+            background-color: rgba(255, 0, 0, 0.1); /* Vermelho para a lixeira */
+        }
+    </style>
+</head>
+<body id="visualizar-equipamentos-a101-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html" class="active">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-principal">
+            
+            <h1>Equipamentos em: Produção A</h1>
+            
+            <a href="equipamentos.html?area_id=area_a101&areaName=Produção%20A" class="btn-primary" style="margin-top: 20px;">+ Novo Equipamento</a>
+        </div>
+        
+        <div id="equipamento-lista" class="equipamento-lista">
+            
+            <div class="card equipamento-item" data-equipamento-id="mock_cnc_p2">
+                <div class="actions-icons-container">
+                    <div class="edit-icon-container" 
+                        onclick="goToEditPage('mock_cnc_p2')" title="Editar propriedades">
+                        ✏️
+                    </div>
+                    <div class="maintenance-icon-container" 
+                        onclick="goToMaintenancePage('mock_cnc_p2', 'Máquina CNC P-2')" title="Registrar manutenção">
+                        📅
+                    </div>
+                    <div class="delete-icon-container" 
+                        onclick="removeEquipment('mock_cnc_p2', 'Máquina CNC P-2')" title="Remover equipamento">
+                        🗑️
+                    </div>
+                </div>
+                
+                <div class="equipamento-info">
+                    <h3>Máquina CNC P-2</h3>
+                    <p>Descrição: <strong>CNC principal, setor 2</strong></p>
+                    <p>Periodicidade: 90 dias</p>
+                    <p>Última Manutenção: 2025-10-01</p>
+                    <span class="status-badge status-ok">OK</span> 
+                </div>
+            </div>
+            
+            <div class="card equipamento-item" data-equipamento-id="mock_bomba_1">
+                <div class="actions-icons-container">
+                    <div class="edit-icon-container" 
+                        onclick="goToEditPage('mock_bomba_1')" title="Editar propriedades">
+                        ✏️
+                    </div>
+                    <div class="maintenance-icon-container" 
+                        onclick="goToMaintenancePage('mock_bomba_1', 'Bomba Hidráulica 1')" title="Registrar manutenção">
+                        📅
+                    </div>
+                    <div class="delete-icon-container" 
+                        onclick="removeEquipment('mock_bomba_1', 'Bomba Hidráulica 1')" title="Remover equipamento">
+                        🗑️
+                    </div>
+                </div>
+                
+                <div class="equipamento-info">
+                    <h3>Bomba Hidráulica 1</h3>
+                    <p>Descrição: <strong>Sistema de refrigeração</strong></p>
+                    <p>Periodicidade: 30 dias</p>
+                    <p>Última Manutenção: 2025-11-01</p>
+                    <span class="status-badge status-ok">OK</span>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+    
+    <script>
+        // 1. LÁPIS (EDITAR) - Navega para a página de edição, passando o ID
+        function goToEditPage(equipamentoId) {
+            // **IMPORTANTE:** Crie o arquivo 'editar-equipamento.html'
+            window.location.href = `editar-equipamento.html?id=${equipamentoId}`;
+        }
+
+        // 2. CALENDÁRIO (REGISTRAR MANUTENÇÃO) - Navega para a página de registro
+        function goToMaintenancePage(equipamentoId, equipamentoName) {
+            // **IMPORTANTE:** Crie o arquivo 'registrar-manutencao.html'
+            const encodedName = encodeURIComponent(equipamentoName);
+            window.location.href = `registrar-manutencao.html?id=${equipamentoId}&name=${encodedName}`;
+        }
+
+        // 3. LIXEIRA (REMOVER) - Pede confirmação antes de remover
+        function removeEquipment(equipamentoId, equipamentoName) {
+            const confirmed = confirm(`Tem certeza que deseja remover o equipamento "${equipamentoName}" (ID: ${equipamentoId})? Esta ação é irreversível.`);
+            
+            if (confirmed) {
+                // ⚠️ AQUI VOCÊ DEVE ADICIONAR A LÓGICA DE EXCLUSÃO REAL (EX: CHAMADA AO FIREBASE)
+                console.log(`Removendo equipamento REALMENTE com ID: ${equipamentoId}`);
+                
+                // Simulação visual de remoção: remove o elemento do DOM e avisa o usuário
+                const itemToRemove = document.querySelector(`.equipamento-item[data-equipamento-id="${equipamentoId}"]`);
+                if (itemToRemove) {
+                    itemToRemove.remove();
+                    alert(`Equipamento "${equipamentoName}" foi removido com sucesso.`);
+                } else {
+                    alert(`Erro: Equipamento "${equipamentoName}" não encontrado para remoção.`);
+                }
+            }
+        }
+        
+        // Se a função 'logout' não estiver em '../js/auth.js', você pode colocá-la aqui:
+        // function logout() { 
+        //     // Lógica de logout (ex: firebase.auth().signOut())
+        //     console.log('Usuário deslogado!');
+        //     window.location.href = '/login.html'; // Redireciona para a página de login
+        // }
+    </script>
+</body>
+</html>

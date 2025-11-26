@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Criar Área</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/area.css"> 
+</head>
+<body id="criar-area-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html" class="active">Áreas</a>
+            <a href="manutencao.html">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="form-container">
+            <h1>Criar Nova Área/Setor</h1>
+            
+            <form id="form-nova-area">
+                <div class="form-group">
+                    <label for="area-nome">Nome da Área:</label>
+                    <input type="text" id="area-nome" required placeholder="Ex: Produção B, Sala de Reuniões, etc.">
+                </div>
+                
+                <button type="submit" class="btn-primary">Salvar Área</button>
+            </form>
+        </div>
+        
+    </div>
+    <script src="../js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+</body>
+</html>

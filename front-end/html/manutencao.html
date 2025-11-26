@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixly - Histórico de Manutenção</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/manutencao.css">
+</head>
+<body id="historico-page">
+    <nav class="navbar">
+        <div class="logo"><a href="../../index.html">Fixly</a></div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="area.html">Áreas</a>
+            <a href="manutencao.html" class="active">Histórico</a>
+            <a href="perfil.html">Perfil</a>
+            <a href="contato.html">Contato</a>
+            <a href="#" onclick="logout()" style="color: #ff4d4d;">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-principal" style="text-align: center; margin-bottom: 40px;">
+            <h1>Histórico de Manutenções 📜</h1>
+            <p>Registro de todas as ações preventivas concluídas.</p>
+        </div>
+        
+        <div id="historico-lista">
+            <div class="card historico-item">
+                <div class="equipamento-info">
+                    <h3>Filtro de Água da Cozinha</h3>
+                    <p>Data da Ação: **2025-11-20**</p>
+                    <p>Detalhes: Troca do refil conforme o ciclo de 6 meses.</p>
+                </div>
+                <span class="status-badge OK" style="background-color: #2980b9;">REGISTRADO</span>
+            </div>
+            
+            <div class="card historico-item">
+                <div class="equipamento-info">
+                    <h3>Limpeza do Ar-Condicionado</h3>
+                    <p>Data da Ação: **2025-09-01**</p>
+                    <p>Detalhes: Limpeza dos filtros e serpentina para o verão.</p>
+                </div>
+                <span class="status-badge OK" style="background-color: #2980b9;">REGISTRADO</span>
+            </div>
+            
+            <p style="text-align: center; margin-top: 30px;">*Dados completos viriam do banco de dados (tabela 'manutencoes').</p>
+        </div>
+
+    </div>
+        <script src="../js/app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="../js/auth.js"></script> 
+    <script src="../js/app.js"></script>
+    </body>
+</html>

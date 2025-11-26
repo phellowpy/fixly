@@ -1,0 +1,143 @@
+/* fixly/front-end/css/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* --- 🌓 Dark Mode / Variáveis Globais --- */
+:root {
+    --bg-dark: #0f1225; /* Cor de fundo escura */
+    --card-bg: rgba(255, 255, 255, 0.05); /* Efeito translúcido (Glassmorphism/Neumorphism) */
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-light: #f4f4f9;
+    --primary-color: #5d5dff; /* Azul/Roxo vibrante (Ênfase) */
+    --alert-color: #ff4d4d; /* Cor de alerta */
+    --ok-color: #4CAF50; /* Cor de status OK */
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif; 
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-top: 60px; /* Espaço para a navbar fixa */
+}
+
+/* --- 🧭 Navbar (Estilo Repetido) --- */
+.navbar {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    background-color: rgba(15, 18, 37, 0.95); /* Semi-transparente */
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 40px;
+    z-index: 1000;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.logo a {
+    color: var(--primary-color); 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    text-decoration: none;
+}
+
+.nav-links a {
+    color: var(--text-light); 
+    text-decoration: none; 
+    padding: 8px 15px; 
+    margin-left: 20px;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary-color); 
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* --- 📦 Layout Base e Componentes Comuns --- */
+
+.container {
+    max-width: 1200px; 
+    margin: 40px auto; 
+    padding: 0 20px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header-principal {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header-principal h1 {
+    font-size: 2.5rem;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    display: inline-block; 
+    background-color: var(--primary-color); 
+    color: var(--text-light);
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 8px; 
+    text-decoration: none;
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover { 
+    background-color: #4b4bbd; 
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.status-badge {
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    font-weight: 600;
+}
+
+.status-badge.ALERTA { 
+    background-color: var(--alert-color); 
+}
+.status-badge.OK { 
+    background-color: var(--ok-color); 
+    color: var(--bg-dark); 
+}
